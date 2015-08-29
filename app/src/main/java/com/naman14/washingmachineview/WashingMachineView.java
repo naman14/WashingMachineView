@@ -19,6 +19,8 @@ import com.naman14.washingmachineview.waterwave.WaterWave;
  */
 public class WashingMachineView extends LinearLayout {
 
+    //linear layout consisting of three views-topview,machineview and bottomview
+
     private int mTopviewHeight;
     private int mMiddleviewHeight;
     private int mBottomviewHeight;
@@ -36,6 +38,7 @@ public class WashingMachineView extends LinearLayout {
 
         setOrientation(VERTICAL);
 
+        //add the views
         addView(new TopView(context, attrs));
         addView(new MachineView(context, attrs));
         addView(new BottomView(context, attrs));
@@ -59,18 +62,21 @@ public class WashingMachineView extends LinearLayout {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
+            //background of topview
             Rect rectBackground = new Rect(0, 0, getWidth(), getHeight());
             paint.setColor(mMachineColor);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rectBackground, paint);
 
+            //the rectangular strip on topview
             Rect rectWhite = new Rect(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(4), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(4));
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rectWhite, paint);
 
+            //three dots at the end of topview
             canvas.drawCircle(getWidth() - getDimensionInPixel(80), getHeight() / 2, getDimensionInPixel(6), paint);
             canvas.drawCircle(getWidth() - getDimensionInPixel(55), getHeight() / 2, getDimensionInPixel(6), paint);
             canvas.drawCircle(getWidth() - getDimensionInPixel(30), getHeight() / 2, getDimensionInPixel(4), paint);
@@ -103,8 +109,10 @@ public class WashingMachineView extends LinearLayout {
         }
     }
 
-    public class MachineView extends FrameLayout {
+    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
+    //Overlay consists of a transparent hole from which water waves are visible
 
+    public class MachineView extends FrameLayout {
 
         public MachineView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -118,6 +126,7 @@ public class WashingMachineView extends LinearLayout {
 
     }
 
+    //get all dimensions in dp so that views behaves properly on different screen resolutions
     private int getDimensionInPixel(int dp){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }

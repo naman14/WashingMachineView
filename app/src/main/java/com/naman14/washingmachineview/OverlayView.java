@@ -24,7 +24,9 @@ public class OverlayView extends View {
     private Paint p = new Paint();
     private Paint transparentPaint;
 
+    //the radius of the hole from where water waves are visible
     private int holeradius;
+
     private int mMachineColor;
 
     public OverlayView(Context context, AttributeSet attrs) {
@@ -46,17 +48,24 @@ public class OverlayView extends View {
         temp = new Canvas(bitmapx);
         paint = new Paint();
         paint.setColor(mMachineColor);
+
+        //paint for creating a hole in view
         transparentPaint = new Paint();
         transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
         transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
+        //draw machine color background
         temp.drawRect(0, 0, getWidth(), getHeight(), paint);
+
+        //draw trasparent hole
         temp.drawCircle(getWidth() / 2, getHeight() / 2, holeradius, transparentPaint);
         canvas.drawBitmap(bitmapx, 0, 0, p);
 
+        //draw single dot in the view at top/left
         paint.setColor(Color.WHITE);
         canvas.drawCircle(getDimensionInPixel(25), getDimensionInPixel(25), getDimensionInPixel(5), paint);
 
+        //draw the ring around the hole
         Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setColor(Color.WHITE);
