@@ -55,7 +55,7 @@ public class OverlayView extends View {
         canvas.drawBitmap(bitmapx, 0, 0, p);
 
         paint.setColor(Color.WHITE);
-        canvas.drawCircle(70, 70, 15, paint);
+        canvas.drawCircle(getDimensionInPixel(25), getDimensionInPixel(25), getDimensionInPixel(5), paint);
 
         Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         ringPaint.setStyle(Paint.Style.STROKE);

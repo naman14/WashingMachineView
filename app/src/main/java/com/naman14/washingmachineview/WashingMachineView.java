@@ -65,15 +65,15 @@ public class WashingMachineView extends LinearLayout {
             paint.setAntiAlias(true);
             canvas.drawRect(rectBackground, paint);
 
-            Rect rectWhite = new Rect(50, getHeight() / 2 - 10, 180, getHeight() / 2 + 10);
+            Rect rectWhite = new Rect(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(4), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(4));
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rectWhite, paint);
 
-            canvas.drawCircle(getWidth() - 300, getHeight() / 2, 25, paint);
-            canvas.drawCircle(getWidth() - 200, getHeight() / 2, 25, paint);
-            canvas.drawCircle(getWidth() - 100, getHeight() / 2, 20, paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(80), getHeight() / 2, getDimensionInPixel(6), paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(55), getHeight() / 2, getDimensionInPixel(6), paint);
+            canvas.drawCircle(getWidth() - getDimensionInPixel(30), getHeight() / 2, getDimensionInPixel(4), paint);
 
         }
     }
