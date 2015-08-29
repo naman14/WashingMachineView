@@ -33,7 +33,7 @@ public class OverlayView extends View {
         setLayoutParams(params);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
-        holeradius=attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius,50);
+        holeradius=attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius,getDimensionInPixel(60));
         mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
         attributes.recycle();
     }
@@ -60,13 +60,13 @@ public class OverlayView extends View {
         Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setColor(Color.WHITE);
-        ringPaint.setStrokeWidth(getHeightInPixel(10));
-        float radius = holeradius+getHeightInPixel(15);
+        ringPaint.setStrokeWidth(getDimensionInPixel(10));
+        float radius = holeradius+getDimensionInPixel(15);
         canvas.drawCircle((float) 0.5 * getWidth(), (float) 0.5 * getHeight(), radius, ringPaint);
 
     }
 
-    private int getHeightInPixel(int dp){
+    private int getDimensionInPixel(int dp){
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }

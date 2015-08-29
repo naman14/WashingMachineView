@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -27,9 +28,9 @@ public class WashingMachineView extends LinearLayout {
         super(context, attrs);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
-        mTopviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height,20);
-        mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,10);
-        mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,100);
+        mTopviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height,getDimensionInPixel(50));
+        mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,getDimensionInPixel(20));
+        mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,getDimensionInPixel(240));
         mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
         attributes.recycle();
 
@@ -117,4 +118,7 @@ public class WashingMachineView extends LinearLayout {
 
     }
 
+    private int getDimensionInPixel(int dp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
 }
