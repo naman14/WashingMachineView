@@ -1,6 +1,7 @@
 package com.naman14.washingmachineview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,8 +18,20 @@ import com.naman14.washingmachineview.waterwave.WaterWave;
  */
 public class WashingMachineView extends LinearLayout {
 
+    private int mTopviewHeight;
+    private int mMiddleviewHeight;
+    private int mBottomviewHeight;
+    private int mMachineColor;
+
     public WashingMachineView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
+        mTopviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height,20);
+        mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,10);
+        mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,100);
+        mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+
         setOrientation(VERTICAL);
 
         addView(new TopView(context, attrs));
@@ -34,7 +47,8 @@ public class WashingMachineView extends LinearLayout {
 
         public TopView(Context context, AttributeSet attrs) {
             super(context, attrs);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 220);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mTopviewHeight);
             params.setMargins(0, 0, 0, 10);
             setLayoutParams(params);
         }
@@ -43,7 +57,7 @@ public class WashingMachineView extends LinearLayout {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-            Rect rectBackground = new Rect(0, 0, getWidth(), 220);
+            Rect rectBackground = new Rect(0, 0, getWidth(), getHeight());
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
@@ -68,7 +82,7 @@ public class WashingMachineView extends LinearLayout {
 
         public BottomView(Context context, AttributeSet attrs) {
             super(context, attrs);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mBottomviewHeight);
             params.setMargins(0, 15, 0, 0);
             setLayoutParams(params);
 
@@ -78,7 +92,7 @@ public class WashingMachineView extends LinearLayout {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-            Rect rect = new Rect(0, 0, getWidth(), 100);
+            Rect rect = new Rect(0, 0, getWidth(), getHeight());
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
@@ -92,7 +106,7 @@ public class WashingMachineView extends LinearLayout {
 
         public MachineView(Context context, AttributeSet attrs) {
             super(context, attrs);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 800);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mMiddleviewHeight);
             setLayoutParams(params);
 
             addView(new WaterWave(context, attrs));
@@ -101,4 +115,5 @@ public class WashingMachineView extends LinearLayout {
 
 
     }
+    
 }

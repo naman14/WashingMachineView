@@ -38,10 +38,10 @@ public class WaterWave extends LinearLayout {
         super(context, attrs);
         setOrientation(VERTICAL);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1000);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
 
-        final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.WaterWave, R.attr.waveViewStyle, 0);
+        final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.WaterWave);
         mAboveWaveColor = attributes.getColor(R.styleable.WaterWave_above_wave_color, DEFAULT_ABOVE_WAVE_COLOR);
         mBlowWaveColor = attributes.getColor(R.styleable.WaterWave_blow_wave_color, DEFAULT_BLOW_WAVE_COLOR);
         mProgress = attributes.getInt(R.styleable.WaterWave_progress, DEFAULT_PROGRESS);

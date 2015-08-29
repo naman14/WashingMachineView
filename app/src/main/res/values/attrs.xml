@@ -22,8 +22,12 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="Themes">
-        <attr name="waveViewStyle" format="reference"/>
+    <declare-styleable name="MachineView">
+        <attr name="machineColor" format="color"/>
+        <attr name="holeRadius" format="dimension"/>
+        <attr name="top_view_height" format="dimension"/>
+        <attr name="bottom_view_height" format="dimension"/>
+        <attr name="middle_view_height" format="dimension"/>
     </declare-styleable>
 
 </resources>

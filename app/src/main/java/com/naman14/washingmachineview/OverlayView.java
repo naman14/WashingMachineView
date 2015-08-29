@@ -1,6 +1,7 @@
 package com.naman14.washingmachineview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,28 +24,31 @@ public class OverlayView extends View {
     private Paint p = new Paint();
     private Paint transparentPaint;
 
+    private int holeradius;
+
     public OverlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 800);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
 
-
-        bitmapx = Bitmap.createBitmap(1080, 1920, Bitmap.Config.ARGB_8888);
-        temp = new Canvas(bitmapx);
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
-        transparentPaint = new Paint();
-        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
-        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
+        holeradius=attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius,50);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        bitmapx = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        temp = new Canvas(bitmapx);
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+        transparentPaint = new Paint();
+        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
+        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
-        temp.drawRect(0, 0, temp.getWidth(), temp.getHeight(), paint);
-        temp.drawCircle(getWidth() / 2, getHeight() / 2, 250, transparentPaint);
+        temp.drawRect(0, 0, getWidth(), getHeight(), paint);
+        temp.drawCircle(getWidth() / 2, getHeight() / 2, holeradius, transparentPaint);
         canvas.drawBitmap(bitmapx, 0, 0, p);
 
         paint.setColor(Color.WHITE);
@@ -52,10 +57,13 @@ public class OverlayView extends View {
         Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setColor(Color.WHITE);
-        ringPaint.setStrokeWidth(45);
-        float radius = 320;
+        ringPaint.setStrokeWidth(getHeightInPixel(10));
+        float radius = holeradius+getHeightInPixel(15);
         canvas.drawCircle((float) 0.5 * getWidth(), (float) 0.5 * getHeight(), radius, ringPaint);
 
     }
 
+    private int getHeightInPixel(int dp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
 }

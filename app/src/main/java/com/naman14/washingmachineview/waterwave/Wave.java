@@ -8,8 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.naman14.washingmachineview.R;
-
 class Wave extends View {
     private final int WAVE_HEIGHT_LARGE = 46;
     private final int WAVE_HEIGHT_MIDDLE = 8;
@@ -23,8 +21,8 @@ class Wave extends View {
     private final float WAVE_HZ_NORMAL = 0.09f;
     private final float WAVE_HZ_SLOW = 0.05f;
 
-    public final int DEFAULT_ABOVE_WAVE_ALPHA = 90;
-    public final int DEFAULT_BLOW_WAVE_ALPHA = 90;
+    public final int DEFAULT_ABOVE_WAVE_ALPHA = 150;
+    public final int DEFAULT_BLOW_WAVE_ALPHA = 255;
 
     private final float X_SPACE = 20;
     private final double PI2 = 2 * Math.PI;
@@ -54,12 +52,9 @@ class Wave extends View {
     private double omega;
 
     public Wave(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.waveViewStyle);
+        super(context, attrs);
     }
 
-    public Wave(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {

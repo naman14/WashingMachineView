@@ -14,10 +14,15 @@
         android:layout_height="wrap_content"
         wave:above_wave_color="#303F9F"
         wave:blow_wave_color="#303F9F"
-        wave:progress="70"
+        wave:progress="55"
         wave:wave_height="large"
         wave:wave_hz="fast"
         wave:wave_length="middle"
+        wave:top_view_height="50dp"
+        wave:bottom_view_height="20dp"
+        wave:middle_view_height="240dp"
+        wave:machineColor="#000000"
+        wave:holeRadius="60dp"
         android:layout_centerInParent="true"/>
 
 
