@@ -31,6 +31,7 @@ public class WashingMachineView extends LinearLayout {
         mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,10);
         mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,100);
         mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+        attributes.recycle();
 
         setOrientation(VERTICAL);
 
@@ -58,7 +59,7 @@ public class WashingMachineView extends LinearLayout {
             super.onDraw(canvas);
 
             Rect rectBackground = new Rect(0, 0, getWidth(), getHeight());
-            paint.setColor(Color.BLACK);
+            paint.setColor(mMachineColor);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rectBackground, paint);
@@ -93,7 +94,7 @@ public class WashingMachineView extends LinearLayout {
             super.onDraw(canvas);
 
             Rect rect = new Rect(0, 0, getWidth(), getHeight());
-            paint.setColor(Color.BLACK);
+            paint.setColor(mMachineColor);
             paint.setStyle(Paint.Style.FILL);
             paint.setAntiAlias(true);
             canvas.drawRect(rect, paint);
@@ -115,5 +116,5 @@ public class WashingMachineView extends LinearLayout {
 
 
     }
-    
+
 }

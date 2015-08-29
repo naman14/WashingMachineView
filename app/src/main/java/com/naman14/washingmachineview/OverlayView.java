@@ -25,6 +25,7 @@ public class OverlayView extends View {
     private Paint transparentPaint;
 
     private int holeradius;
+    private int mMachineColor;
 
     public OverlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,6 +34,8 @@ public class OverlayView extends View {
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
         holeradius=attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius,50);
+        mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+        attributes.recycle();
     }
 
     @Override
@@ -42,7 +45,7 @@ public class OverlayView extends View {
         bitmapx = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         temp = new Canvas(bitmapx);
         paint = new Paint();
-        paint.setColor(Color.BLACK);
+        paint.setColor(mMachineColor);
         transparentPaint = new Paint();
         transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
         transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
