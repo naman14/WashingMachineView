@@ -6,6 +6,9 @@ An interactive view with water waves flowing in a Washing machine
 #Demo apk
 Demo apk is available in [releases](https://github.com/naman14/WashingMachineView/releases).
 
+#Credits-
+Water waves code is based on jonn990's awesome [WaveView](https://github.com/john990/WaveView)Library
+
 
 License
 ===============
