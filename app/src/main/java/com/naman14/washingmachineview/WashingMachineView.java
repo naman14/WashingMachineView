@@ -30,10 +30,10 @@ public class WashingMachineView extends LinearLayout {
         super(context, attrs);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
-        mTopviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height,getDimensionInPixel(50));
-        mBottomviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height,getDimensionInPixel(20));
-        mMiddleviewHeight=attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height,getDimensionInPixel(240));
-        mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+        mTopviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_top_view_height, getDimensionInPixel(50));
+        mBottomviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_bottom_view_height, getDimensionInPixel(20));
+        mMiddleviewHeight = attributes.getDimensionPixelSize(R.styleable.MachineView_middle_view_height, getDimensionInPixel(240));
+        mMachineColor = attributes.getColor(R.styleable.MachineView_machineColor, Color.BLACK);
         attributes.recycle();
 
         setOrientation(VERTICAL);
@@ -46,9 +46,16 @@ public class WashingMachineView extends LinearLayout {
 
     }
 
+    //get all dimensions in dp so that views behaves properly on different screen resolutions
+    private int getDimensionInPixel(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
     public class TopView extends View {
 
-        Paint paint = new Paint();
+        Paint paint;
+        Rect rectBackground;
+        Rect rectWhite;
 
         public TopView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -56,6 +63,13 @@ public class WashingMachineView extends LinearLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mTopviewHeight);
             params.setMargins(0, 0, 0, 10);
             setLayoutParams(params);
+
+            paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+
+            rectBackground = new Rect();
+            rectWhite = new Rect();
         }
 
         @Override
@@ -63,17 +77,13 @@ public class WashingMachineView extends LinearLayout {
             super.onDraw(canvas);
 
             //background of topview
-            Rect rectBackground = new Rect(0, 0, getWidth(), getHeight());
+            rectBackground.set(0, 0, getWidth(), getHeight());
             paint.setColor(mMachineColor);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setAntiAlias(true);
             canvas.drawRect(rectBackground, paint);
 
             //the rectangular strip on topview
-            Rect rectWhite = new Rect(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(4), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(4));
+            rectWhite.set(getDimensionInPixel(20), getHeight() / 2 - getDimensionInPixel(4), getDimensionInPixel(60), getHeight() / 2 + getDimensionInPixel(4));
             paint.setColor(Color.WHITE);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setAntiAlias(true);
             canvas.drawRect(rectWhite, paint);
 
             //three dots at the end of topview
@@ -84,9 +94,13 @@ public class WashingMachineView extends LinearLayout {
         }
     }
 
+    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
+    //Overlay consists of a transparent hole from which water waves are visible
+
     public class BottomView extends View {
 
-        Paint paint = new Paint();
+        Paint paint;
+        Rect rect;
 
         public BottomView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -94,23 +108,24 @@ public class WashingMachineView extends LinearLayout {
             params.setMargins(0, 15, 0, 0);
             setLayoutParams(params);
 
+            paint = new Paint();
+            paint.setColor(mMachineColor);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+
+            rect = new Rect();
+
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-            Rect rect = new Rect(0, 0, getWidth(), getHeight());
-            paint.setColor(mMachineColor);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setAntiAlias(true);
+            rect.set(0, 0, getWidth(), getHeight());
             canvas.drawRect(rect, paint);
 
         }
     }
-
-    //machineview(middle view) extends FrameLayout and has two views-WaterWave and Overlay.
-    //Overlay consists of a transparent hole from which water waves are visible
 
     public class MachineView extends FrameLayout {
 
@@ -124,10 +139,5 @@ public class WashingMachineView extends LinearLayout {
         }
 
 
-    }
-
-    //get all dimensions in dp so that views behaves properly on different screen resolutions
-    private int getDimensionInPixel(int dp){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }
