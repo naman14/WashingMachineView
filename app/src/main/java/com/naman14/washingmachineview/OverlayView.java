@@ -18,14 +18,16 @@ import android.widget.LinearLayout;
  */
 public class OverlayView extends View {
 
-    Bitmap bitmapx;
+    private Bitmap bitmapx;
     private Canvas temp;
     private Paint paint;
-    private Paint p = new Paint();
+    private Paint p;
     private Paint transparentPaint;
+    private Paint ringPaint;
 
     //the radius of the hole from where water waves are visible
     private int holeradius;
+    private float ringRadius;
 
     private int mMachineColor;
 
@@ -35,26 +37,39 @@ public class OverlayView extends View {
         setLayoutParams(params);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.MachineView);
-        holeradius=attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius,getDimensionInPixel(60));
-        mMachineColor=attributes.getColor(R.styleable.MachineView_machineColor,Color.BLACK);
+        holeradius = attributes.getDimensionPixelSize(R.styleable.MachineView_holeRadius, getDimensionInPixel(60));
+        mMachineColor = attributes.getColor(R.styleable.MachineView_machineColor, Color.BLACK);
         attributes.recycle();
+
+        ringRadius = holeradius + getDimensionInPixel(15);
+
+        paint = new Paint();
+        p = new Paint();
+
+        temp = new Canvas();
+
+        ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        ringPaint.setStyle(Paint.Style.STROKE);
+        ringPaint.setColor(Color.WHITE);
+        ringPaint.setStrokeWidth(getDimensionInPixel(10));
+
+        //paint for creating a hole in view
+        transparentPaint = new Paint();
+        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
+        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        bitmapx = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        temp = new Canvas(bitmapx);
-        paint = new Paint();
-        paint.setColor(mMachineColor);
-
-        //paint for creating a hole in view
-        transparentPaint = new Paint();
-        transparentPaint.setColor(getResources().getColor(android.R.color.transparent));
-        transparentPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        if (bitmapx == null) {
+            bitmapx = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            temp.setBitmap(bitmapx);
+        }
 
         //draw machine color background
+        paint.setColor(mMachineColor);
         temp.drawRect(0, 0, getWidth(), getHeight(), paint);
 
         //draw trasparent hole
@@ -66,16 +81,11 @@ public class OverlayView extends View {
         canvas.drawCircle(getDimensionInPixel(25), getDimensionInPixel(25), getDimensionInPixel(5), paint);
 
         //draw the ring around the hole
-        Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        ringPaint.setStyle(Paint.Style.STROKE);
-        ringPaint.setColor(Color.WHITE);
-        ringPaint.setStrokeWidth(getDimensionInPixel(10));
-        float radius = holeradius+getDimensionInPixel(15);
-        canvas.drawCircle((float) 0.5 * getWidth(), (float) 0.5 * getHeight(), radius, ringPaint);
+        canvas.drawCircle((float) 0.5 * getWidth(), (float) 0.5 * getHeight(), ringRadius, ringPaint);
 
     }
 
-    private int getDimensionInPixel(int dp){
+    private int getDimensionInPixel(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }
